@@ -23,12 +23,12 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: |
-        dotnet test --no-build --verbosity normal ./tests/JustSaying.UnitTests/JustSaying.UnitTests.csproj
-        dotnet test --no-build --verbosity normal ./tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests.csproj
+        dotnet test --no-restore --verbosity normal ./tests/JustSaying.UnitTests/JustSaying.UnitTests.csproj
+        dotnet test --no-restore --verbosity normal ./tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests.csproj
     - name: Integration Test
       run: |
         goaws_tag=latest
         docker pull pafortin/goaws:$goaws_tag
         docker run -d --name goaws -p 4100:4100 pafortin/goaws:$goaws_tag
         export AWS_SERVICE_URL="http://localhost:4100"
-        dotnet test --no-build --verbosity normal ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj
+        dotnet test --no-restore --verbosity normal ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj
