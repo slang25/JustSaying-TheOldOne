@@ -33,9 +33,17 @@ jobs:
         export AWS_SERVICE_URL="http://localhost:4100"
         dotnet test --no-restore --verbosity normal ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj
     - name: Pack
-      run: dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying/JustSaying.csproj
+      run: |
+        dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying/JustSaying.csproj
+        dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying.Models/JustSaying.Models.csproj
+        dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying.Extensions.DependencyInjection.Microsoft/JustSaying.Extensions.DependencyInjection.Microsoft.csproj
+        dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying.Extensions.DependencyInjection.StructureMap/JustSaying.Extensions.DependencyInjection.StructureMap.csproj
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: nupkg
-        path: ./src/JustSaying/bin/Release/*.nupkg
+        name: NuGet Packages
+        path: |
+          ./src/JustSaying/bin/Release/*.nupkg
+          ./src/JustSaying.Models/bin/Release/*.nupkg
+          ./src/JustSaying.Extensions.DependencyInjection.Microsoft/bin/Release/*.nupkg
+          ./src/JustSaying.Extensions.DependencyInjection.StructureMap/bin/Release/*.nupkg
