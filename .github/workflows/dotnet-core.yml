@@ -33,7 +33,7 @@ jobs:
         export AWS_SERVICE_URL="http://localhost:4100"
         dotnet test --no-restore --verbosity normal ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj
     - name: Pack
-      run: dotnet pack --no-restore -verbosity normal -c Release ./src/JustSaying/JustSaying.csproj
+      run: dotnet pack --no-restore --verbosity normal -c Release ./src/JustSaying/JustSaying.csproj
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
