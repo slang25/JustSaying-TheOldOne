@@ -12,7 +12,7 @@ namespace JustSaying.IntegrationTests.TestHandlers
 
         public async Task<bool> Handle(OrderPlaced message)
         {
-            await Future.Complete(message);
+            await Future.Complete(message).ConfigureAwait(false);
             return true;
         }
 

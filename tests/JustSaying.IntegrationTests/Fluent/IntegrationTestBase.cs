@@ -85,7 +85,7 @@ namespace JustSaying.IntegrationTests.Fluent
         }
 
         protected async Task WhenAsync(IServiceCollection services, Func<IMessagePublisher, IMessagingBus, CancellationToken, Task> action)
-            => await WhenAsync(services, async (p, b, _, c) => await action(p, b, c));
+            => await WhenAsync(services, async (p, b, _, c) => await action(p, b, c).ConfigureAwait(false)).ConfigureAwait(false);
 
         protected async Task WhenAsync(IServiceCollection services, Func<IMessagePublisher, IMessagingBus, IServiceProvider, CancellationToken, Task> action)
         {
@@ -96,7 +96,7 @@ namespace JustSaying.IntegrationTests.Fluent
 
             await RunActionWithTimeout(async cancellationToken =>
                 await action(publisher, listener, serviceProvider, cancellationToken)
-                    .ConfigureAwait(false));
+                    .ConfigureAwait(false)).ConfigureAwait(false);
         }
 
         protected async Task RunActionWithTimeout(Func<CancellationToken, Task> action)
@@ -119,7 +119,7 @@ namespace JustSaying.IntegrationTests.Fluent
                     cts.Cancel();
                 }
 
-                await actionTask;
+                await actionTask.ConfigureAwait(false);
             }
         }
     }

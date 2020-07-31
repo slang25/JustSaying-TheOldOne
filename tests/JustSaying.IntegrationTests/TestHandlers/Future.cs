@@ -33,7 +33,7 @@ namespace JustSaying.IntegrationTests.TestHandlers
 
                 if (_action != null)
                 {
-                    await _action();
+                    await _action().ConfigureAwait(false);
                 }
             }
             finally

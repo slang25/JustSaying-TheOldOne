@@ -40,14 +40,14 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(message, cancellationToken);
-                    await handler.DoneSignal.Task;
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
+                    await handler.DoneSignal.Task.ConfigureAwait(false);
 
                     // Assert
                     handler.MessageReceived.ShouldNotBeNull();
 
                     monitoring.Received().HandleException(Arg.Any<Type>());
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

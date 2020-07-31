@@ -31,11 +31,11 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(new GenericMessage<MyMessage>(), cancellationToken);
+                    await publisher.PublishAsync(new GenericMessage<MyMessage>(), cancellationToken).ConfigureAwait(false);
 
                     // Assert
                     completionSource.Task.Wait(cancellationToken);
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

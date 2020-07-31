@@ -18,19 +18,19 @@ namespace JustSaying.IntegrationTests.Fluent
         public async Task TestRunnerWillSucceedOnSuccessfulTask()
         {
             async Task SuccessTask(CancellationToken ctx) =>
-                await Task.Delay(100, ctx);
+                await Task.Delay(100, ctx).ConfigureAwait(false);
 
-            await RunActionWithTimeout(SuccessTask);
+            await RunActionWithTimeout(SuccessTask).ConfigureAwait(false);
         }
 
         [Fact]
         public async Task TestRunnerWillThrowOnTimeout()
         {
             async Task TimeoutTask(CancellationToken ctx) =>
-                await Task.Delay(Timeout.Add(Timeout), ctx);
+                await Task.Delay(Timeout.Add(Timeout), ctx).ConfigureAwait(false);
 
             await Assert.ThrowsAsync<TimeoutException>(
-                () => RunActionWithTimeout(TimeoutTask));
+                () => RunActionWithTimeout(TimeoutTask)).ConfigureAwait(false);
         }
 
         [Fact]
@@ -38,12 +38,12 @@ namespace JustSaying.IntegrationTests.Fluent
         {
             async Task ThrowingTask(CancellationToken ctx)
             {
-                await Task.Delay(100, ctx);
+                await Task.Delay(100, ctx).ConfigureAwait(false);
                 throw new InvalidOperationException();
             }
 
             await Assert.ThrowsAsync<InvalidOperationException>(
-                () => RunActionWithTimeout(ThrowingTask));
+                () => RunActionWithTimeout(ThrowingTask)).ConfigureAwait(false);
         }
     }
 }

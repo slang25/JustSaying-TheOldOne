@@ -33,7 +33,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(new SimpleMessage(), cancellationToken);
+                    await publisher.PublishAsync(new SimpleMessage(), cancellationToken).ConfigureAwait(false);
                     completionSource.Task.Wait(cancellationToken);
 
                     // Assert
@@ -47,7 +47,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     response.ShouldNotBeNull();
                     response.HttpStatusCode.ShouldBe(HttpStatusCode.OK);
                     response.QueueUrl.ShouldNotBeNull();
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

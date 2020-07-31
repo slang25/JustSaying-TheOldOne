@@ -32,10 +32,10 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory,
                 null);
 
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId }).ConfigureAwait(false);
 
             // Act
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = String.Empty });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = String.Empty }).ConfigureAwait(false);
 
             // Assert
             topic.ServerSideEncryption.ShouldBeNull();

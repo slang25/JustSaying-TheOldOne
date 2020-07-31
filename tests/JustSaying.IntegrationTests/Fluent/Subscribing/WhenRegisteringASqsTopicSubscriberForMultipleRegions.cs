@@ -45,7 +45,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(new MySqsTopicMessageForMultipleRegions(), cancellationToken);
+                    await publisher.PublishAsync(new MySqsTopicMessageForMultipleRegions(), cancellationToken).ConfigureAwait(false);
                     completionSource.Task.Wait(cancellationToken);
 
                     // Assert
@@ -80,7 +80,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                             .Count((p) => p.EndsWith(":MySqsTopicMessageForMultipleRegions", StringComparison.OrdinalIgnoreCase))
                             .ShouldBe(1);
                     }
-                });
+                }).ConfigureAwait(false);
         }
 
         public class MySqsTopicMessageForMultipleRegions : JustSaying.Models.Message

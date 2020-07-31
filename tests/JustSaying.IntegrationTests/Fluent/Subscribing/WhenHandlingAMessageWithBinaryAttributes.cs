@@ -56,16 +56,16 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     var metadata = new PublishMetadata()
                         .AddMessageAttribute("content", "somecontent")
                         .AddMessageAttribute("binarycontent", Encoding.UTF8.GetBytes("somebinarydata"));
-                    await publisher.PublishAsync(new SimpleMessage(), metadata, cancellationToken);
+                    await publisher.PublishAsync(new SimpleMessage(), metadata, cancellationToken).ConfigureAwait(false);
 
-                    await Patiently.AssertThatAsync(() => handler.HandledMessages.Count > 0, TimeSpan.FromSeconds(5));
+                    await Patiently.AssertThatAsync(() => handler.HandledMessages.Count > 0, TimeSpan.FromSeconds(5)).ConfigureAwait(false);
 
                     handler.HandledMessages.Count.ShouldBe(1);
                     handler.HandledMessages[0].context.MessageAttributes.Get("content").StringValue.ShouldBe("somecontent");
 
                     var binaryData = handler.HandledMessages[0].context.MessageAttributes.Get("binarycontent").BinaryValue;
                     Encoding.UTF8.GetString(binaryData.ToArray()).ShouldBe("somebinarydata");
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

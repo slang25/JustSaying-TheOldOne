@@ -39,8 +39,8 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 subjectProvider);
 
             // Act and Assert
-            (await topic.CreateAsync()).ShouldBeTrue();
-            (await topic.CreateAsync()).ShouldBeTrue();
+            (await topic.CreateAsync().ConfigureAwait(false)).ShouldBeTrue();
+            (await topic.CreateAsync().ConfigureAwait(false)).ShouldBeTrue();
 
             topic.Arn.ShouldNotBeNull();
             topic.Arn.ShouldEndWith(topic.TopicName);

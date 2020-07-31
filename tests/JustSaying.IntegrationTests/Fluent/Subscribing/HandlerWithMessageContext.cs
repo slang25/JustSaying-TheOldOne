@@ -38,7 +38,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                 messageContext.QueueUri,
                 messageContext.Message.Body);
 
-            await Future.Complete(message);
+            await Future.Complete(message).ConfigureAwait(false);
             return true;
         }
     }

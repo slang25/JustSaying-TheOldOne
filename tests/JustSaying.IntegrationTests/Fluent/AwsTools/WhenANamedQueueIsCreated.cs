@@ -32,12 +32,12 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory);
 
             // Act
-            await queue.CreateAsync(new SqsBasicConfiguration());
+            await queue.CreateAsync(new SqsBasicConfiguration()).ConfigureAwait(false);
 
             // Assert
             await Patiently.AssertThatAsync(
-                async () => await queue.ErrorQueue.ExistsAsync(),
-                40.Seconds());
+                async () => await queue.ErrorQueue.ExistsAsync().ConfigureAwait(false),
+                40.Seconds()).ConfigureAwait(false);
         }
     }
 }

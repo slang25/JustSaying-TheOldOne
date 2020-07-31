@@ -56,14 +56,14 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     var metadata = new PublishMetadata()
                         .AddMessageAttribute("content1", "somecontent")
                         .AddMessageAttribute("content2", "somemorecontent");
-                    await publisher.PublishAsync(new SimpleMessage(), metadata, cancellationToken);
+                    await publisher.PublishAsync(new SimpleMessage(), metadata, cancellationToken).ConfigureAwait(false);
 
-                    await Patiently.AssertThatAsync(() => handler.HandledMessages.Count > 0, TimeSpan.FromSeconds(5));
+                    await Patiently.AssertThatAsync(() => handler.HandledMessages.Count > 0, TimeSpan.FromSeconds(5)).ConfigureAwait(false);
 
                     handler.HandledMessages.Count.ShouldBe(1);
                     handler.HandledMessages[0].context.MessageAttributes.Get("content1").StringValue.ShouldBe("somecontent");
                     handler.HandledMessages[0].context.MessageAttributes.Get("content2").StringValue.ShouldBe("somemorecontent");
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

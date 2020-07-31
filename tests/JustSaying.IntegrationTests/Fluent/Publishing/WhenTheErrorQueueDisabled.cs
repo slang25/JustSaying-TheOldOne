@@ -38,7 +38,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
             // Assert
             var client = CreateClientFactory().GetSqsClient(Region);
 
-            var queues = await client.ListQueuesAsync(UniqueName);
+            var queues = await client.ListQueuesAsync(UniqueName).ConfigureAwait(false);
             queues.QueueUrls.Count.ShouldBe(1, "More than one queue was created.");
             queues.QueueUrls.ShouldAllBe((url) => url.Contains(UniqueName, StringComparison.Ordinal), "The queue URL is not for the expected queue.");
             queues.QueueUrls.ShouldAllBe((url) => !url.Contains("_error", StringComparison.Ordinal), "The queue URL appears to be for an error queue.");

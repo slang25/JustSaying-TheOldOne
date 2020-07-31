@@ -56,12 +56,12 @@ namespace JustSaying.IntegrationTests
 
                 var message = new QueueMessage();
 
-                await publisher.PublishAsync(message, source.Token);
+                await publisher.PublishAsync(message, source.Token).ConfigureAwait(false);
 
                 // Assert
                 while (!source.IsCancellationRequested && !QueueHandler.MessageIds.Contains(message.Id))
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token);
+                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token).ConfigureAwait(false);
                 }
 
                 QueueHandler.MessageIds.ShouldContain(message.Id);
@@ -99,12 +99,12 @@ namespace JustSaying.IntegrationTests
 
                 var message = new TopicMessage();
 
-                await publisher.PublishAsync(message, source.Token);
+                await publisher.PublishAsync(message, source.Token).ConfigureAwait(false);
 
                 // Assert
                 while (!source.IsCancellationRequested && !TopicHandler.MessageIds.Contains(message.Id))
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token);
+                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token).ConfigureAwait(false);
                 }
 
                 TopicHandler.MessageIds.ShouldContain(message.Id);
@@ -158,12 +158,12 @@ namespace JustSaying.IntegrationTests
 
                 var message = new QueueMessage();
 
-                await publisher.PublishAsync(message, source.Token);
+                await publisher.PublishAsync(message, source.Token).ConfigureAwait(false);
 
                 // Assert
                 while (!source.IsCancellationRequested && !QueueHandler.MessageIds.Contains(message.Id))
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token);
+                    await Task.Delay(TimeSpan.FromSeconds(0.2), source.Token).ConfigureAwait(false);
                 }
 
                 QueueHandler.MessageIds.ShouldContain(message.Id);

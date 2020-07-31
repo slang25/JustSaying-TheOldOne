@@ -33,11 +33,11 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory);
 
             await queue.CreateAsync(
-                new SqsBasicConfiguration { ServerSideEncryption = new ServerSideEncryption() });
+                new SqsBasicConfiguration { ServerSideEncryption = new ServerSideEncryption() }).ConfigureAwait(false);
 
             // Act
             await queue.UpdateQueueAttributeAsync(
-                new SqsBasicConfiguration { ServerSideEncryption = null });
+                new SqsBasicConfiguration { ServerSideEncryption = null }).ConfigureAwait(false);
 
             // Assert
             queue.ServerSideEncryption.ShouldBeNull();

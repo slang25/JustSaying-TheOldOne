@@ -42,12 +42,12 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
 
                     var queue = new SqsQueueByName(Region, UniqueName, client, 0, loggerFactory);
 
-                    await Patiently.AssertThatAsync(() => queue.ExistsAsync(), 60.Seconds());
+                    await Patiently.AssertThatAsync(() => queue.ExistsAsync(), 60.Seconds()).ConfigureAwait(false);
 
                     dynamic policyJson = JObject.Parse(queue.Policy);
 
                     policyJson.Statement.Count.ShouldBe(1, $"Expecting 1 statement in Sqs policy but found {policyJson.Statement.Count}.");
-                });
+                }).ConfigureAwait(false);
         }
 
         private class TopicA : Message

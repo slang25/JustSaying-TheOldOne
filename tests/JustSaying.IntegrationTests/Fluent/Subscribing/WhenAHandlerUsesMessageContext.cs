@@ -49,13 +49,13 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(message, cancellationToken);
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
 
                     // Assert
-                    await future.DoneSignal;
+                    await future.DoneSignal.ConfigureAwait(false);
 
                     accessor.ValuesWritten.Count.ShouldBeGreaterThan(1);
-                });
+                }).ConfigureAwait(false);
         }
     }
 }

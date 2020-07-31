@@ -37,11 +37,11 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory);
 
             await queue.CreateAsync(
-                new SqsBasicConfiguration { MessageRetention = oldRetentionPeriod });
+                new SqsBasicConfiguration { MessageRetention = oldRetentionPeriod }).ConfigureAwait(false);
 
             // Act
             await queue.UpdateQueueAttributeAsync(
-                new SqsBasicConfiguration { MessageRetention = newRetentionPeriod });
+                new SqsBasicConfiguration { MessageRetention = newRetentionPeriod }).ConfigureAwait(false);
 
             // Assert
             queue.MessageRetentionPeriod.ShouldBe(newRetentionPeriod);

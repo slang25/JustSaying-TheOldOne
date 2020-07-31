@@ -38,11 +38,11 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
             };
 
             // Act
-            await queue.CreateAsync(queueConfig);
+            await queue.CreateAsync(queueConfig).ConfigureAwait(false);
 
             queueConfig.ErrorQueueRetentionPeriod = TimeSpan.FromSeconds(100);
 
-            await queue.UpdateQueueAttributeAsync(queueConfig);
+            await queue.UpdateQueueAttributeAsync(queueConfig).ConfigureAwait(false);
 
             // Assert
             queue.MessageRetentionPeriod.ShouldBe(TimeSpan.FromSeconds(100));

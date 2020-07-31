@@ -31,14 +31,14 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 1,
                 loggerFactory);
 
-            await queue.CreateAsync(new SqsBasicConfiguration());
+            await queue.CreateAsync(new SqsBasicConfiguration()).ConfigureAwait(false);
 
             // Act
-            await queue.DeleteAsync();
+            await queue.DeleteAsync().ConfigureAwait(false);
 
             // Assert
             await Patiently.AssertThatAsync(
-                async () => !await queue.ErrorQueue.ExistsAsync());
+                async () => !await queue.ErrorQueue.ExistsAsync()).ConfigureAwait(false);
         }
     }
 }

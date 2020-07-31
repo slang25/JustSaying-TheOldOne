@@ -46,13 +46,13 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                     _ = listener.StartAsync(cancellationToken);
 
                     // Act
-                    await publisher.PublishAsync(message, cancellationToken);
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
 
                     // Assert
                     completionSource.Task.Wait(cancellationToken);
 
-                    await handler.Received().Handle(Arg.Is<SimpleMessage>((m) => m.Content == content));
-                });
+                    await handler.Received().Handle(Arg.Is<SimpleMessage>((m) => m.Content == content)).ConfigureAwait(false);
+                }).ConfigureAwait(false);
         }
     }
 }

@@ -34,11 +34,11 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 1,
                 loggerFactory);
 
-            await queue.CreateAsync(new SqsBasicConfiguration());
+            await queue.CreateAsync(new SqsBasicConfiguration()).ConfigureAwait(false);
 
             // Act
             await queue.UpdateRedrivePolicyAsync(
-                new RedrivePolicy(maximumReceives, queue.ErrorQueue.Arn));
+                new RedrivePolicy(maximumReceives, queue.ErrorQueue.Arn)).ConfigureAwait(false);
 
             // Assert
             queue.RedrivePolicy.ShouldNotBeNull();

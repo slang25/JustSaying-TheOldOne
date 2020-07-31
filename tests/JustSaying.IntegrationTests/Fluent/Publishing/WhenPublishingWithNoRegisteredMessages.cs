@@ -26,7 +26,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
             var publisher = serviceProvider.GetService<IMessagePublisher>();
 
             // Act and Assert
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => publisher.PublishAsync(new SimpleMessage()));
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() => publisher.PublishAsync(new SimpleMessage())).ConfigureAwait(false);
             exception.Message.ShouldBe("Error publishing message, no publishers registered.");
         }
     }

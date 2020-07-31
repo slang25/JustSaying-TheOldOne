@@ -30,7 +30,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                 .AddSingleton(handler);
 
             // Act and Assert
-            await AssertMessagePublishedAndReceivedAsync(services, handler, completionSource);
+            await AssertMessagePublishedAndReceivedAsync(services, handler, completionSource).ConfigureAwait(false);
         }
 
         [AwsFact]
@@ -48,7 +48,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                     builder.Messaging(
                         (config) => config.WithPublishFailureBackoff(TimeSpan.FromMilliseconds(1))
                                           .WithPublishFailureReattempts(1));
-                    
+
                     builder.Subscriptions(
                         (subscription) => subscription.ForTopic<SimpleMessage>(
                             (topic) => topic.WithName(UniqueName)));
@@ -56,7 +56,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                 .AddSingleton(handler);
 
             // Act and Assert
-            await AssertMessagePublishedAndReceivedAsync(services, handler, completionSource);
+            await AssertMessagePublishedAndReceivedAsync(services, handler, completionSource).ConfigureAwait(false);
         }
 
         private async Task AssertMessagePublishedAndReceivedAsync<T>(
@@ -76,7 +76,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
             var message = new T();
 
             // Act
-            await publisher.PublishAsync(message, source.Token);
+            await publisher.PublishAsync(message, source.Token).ConfigureAwait(false);
 
             // Assert
             try
@@ -88,7 +88,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                 // Ignore
             }
 
-            await handler.Received(1).Handle(Arg.Is<T>((p) => p.UniqueKey() == message.UniqueKey()));
+            await handler.Received(1).Handle(Arg.Is<T>((p) => p.UniqueKey() == message.UniqueKey())).ConfigureAwait(false);
         }
     }
 }

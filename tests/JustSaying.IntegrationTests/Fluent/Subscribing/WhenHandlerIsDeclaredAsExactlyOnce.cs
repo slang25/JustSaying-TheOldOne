@@ -40,13 +40,13 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     var message = new SimpleMessage();
 
                     // Act
-                    await publisher.PublishAsync(message, cancellationToken);
-                    await publisher.PublishAsync(message, cancellationToken);
-                    await Task.Delay(5.Seconds());
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(5.Seconds()).ConfigureAwait(false);
 
                     // Assert
                     handler.NumberOfTimesIHaveBeenCalledForMessage(message.UniqueKey()).ShouldBe(1);
-                });
+                }).ConfigureAwait(false);
         }
 
         private sealed class MessageLockStore : IMessageLockAsync

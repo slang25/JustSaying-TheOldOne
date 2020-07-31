@@ -46,9 +46,9 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 retryCountBeforeSendingToErrorQueue,
                 loggerFactory);
 
-            if (!await queue.ExistsAsync())
+            if (!await queue.ExistsAsync().ConfigureAwait(false))
             {
-                await queue.CreateAsync(new SqsBasicConfiguration());
+                await queue.CreateAsync(new SqsBasicConfiguration()).ConfigureAwait(false);
 
                 if (!IsSimulator)
                 {
@@ -57,9 +57,9 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                     {
                         while (!cts.IsCancellationRequested)
                         {
-                            await Task.Delay(TimeSpan.FromSeconds(2));
+                            await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
 
-                            if (await queue.ExistsAsync())
+                            if (await queue.ExistsAsync().ConfigureAwait(false))
                             {
                                 break;
                             }
@@ -68,7 +68,7 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 }
             }
 
-            Assert.True(await queue.ExistsAsync(), "The queue was not created.");
+            Assert.True(await queue.ExistsAsync().ConfigureAwait(false), "The queue was not created.");
 
             OutputHelper.WriteLine($"{DateTime.Now} - Adding {throttleMessageCount} messages to the queue.");
 
@@ -91,7 +91,7 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                     entriesAdded++;
                 }
 
-                await client.SendMessageBatchAsync(queue.Uri.AbsoluteUri, entries);
+                await client.SendMessageBatchAsync(queue.Uri.AbsoluteUri, entries).ConfigureAwait(false);
             }
             while (entriesAdded < throttleMessageCount);
 
@@ -122,7 +122,7 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
 
                     do
                     {
-                        await Task.Delay(delay);
+                        await Task.Delay(delay).ConfigureAwait(false);
 
                         OutputHelper.WriteLine($"{DateTime.Now} - Handled {count} messages. Waiting for completion.");
                     }
@@ -130,7 +130,7 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
 
                     stopwatch.Stop();
                     timeToProcess = stopwatch.Elapsed;
-                });
+                }).ConfigureAwait(false);
 
             // Assert
             OutputHelper.WriteLine($"{DateTime.Now} - Handled {count:N0} messages.");

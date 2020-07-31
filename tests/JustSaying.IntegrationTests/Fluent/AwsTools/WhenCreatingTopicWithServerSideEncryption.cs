@@ -32,7 +32,7 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 null);
 
             // Act
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId }).ConfigureAwait(false);
 
             // Assert
             topic.ServerSideEncryption.KmsMasterKeyId.ShouldBe(JustSayingConstants.DefaultSnsAttributeEncryptionKeyId);
@@ -54,10 +54,10 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory,
                 null);
 
-            await topic.CreateAsync();
+            await topic.CreateAsync().ConfigureAwait(false);
 
             // Act
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId }).ConfigureAwait(false);
 
             // Assert
             topic.ServerSideEncryption.KmsMasterKeyId.ShouldBe(JustSayingConstants.DefaultSnsAttributeEncryptionKeyId);
@@ -79,10 +79,10 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory,
                 null);
 
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = "previousKeyId" });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = "previousKeyId" }).ConfigureAwait(false);
 
             // Act
-            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId });
+            await topic.CreateWithEncryptionAsync(new ServerSideEncryption { KmsMasterKeyId = JustSayingConstants.DefaultSnsAttributeEncryptionKeyId }).ConfigureAwait(false);
 
             // Assert
             topic.ServerSideEncryption.KmsMasterKeyId.ShouldBe(JustSayingConstants.DefaultSnsAttributeEncryptionKeyId);

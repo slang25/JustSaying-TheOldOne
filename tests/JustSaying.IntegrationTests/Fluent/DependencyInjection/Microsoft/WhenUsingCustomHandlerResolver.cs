@@ -36,12 +36,12 @@ namespace JustSaying.IntegrationTests.Fluent.DependencyInjection.Microsoft
                     var message = new OrderPlaced(Guid.NewGuid().ToString());
 
                     // Act
-                    await publisher.PublishAsync(message, cancellationToken);
+                    await publisher.PublishAsync(message, cancellationToken).ConfigureAwait(false);
 
                     //Assert
-                    await future.DoneSignal;
+                    await future.DoneSignal.ConfigureAwait(false);
                     future.ReceivedMessageCount.ShouldBeGreaterThan(0);
-                });
+                }).ConfigureAwait(false);
         }
 
         private sealed class MyCustomHandlerResolver : IHandlerResolver

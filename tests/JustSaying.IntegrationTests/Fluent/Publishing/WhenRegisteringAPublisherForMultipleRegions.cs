@@ -37,7 +37,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
 
             // Act
             var publisher = serviceProvider.GetService<IMessagePublisher>();
-            await publisher.PublishAsync(new MyMessageForMultipleRegions());
+            await publisher.PublishAsync(new MyMessageForMultipleRegions()).ConfigureAwait(false);
 
             // Assert
             var busBuilder = serviceProvider.GetRequiredService<MessagingBusBuilder>();

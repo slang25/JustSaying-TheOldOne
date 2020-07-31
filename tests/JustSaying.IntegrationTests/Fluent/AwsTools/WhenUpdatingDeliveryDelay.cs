@@ -37,11 +37,11 @@ namespace JustSaying.IntegrationTests.Fluent.AwsTools
                 loggerFactory);
 
             await queue.CreateAsync(
-                new SqsBasicConfiguration() { DeliveryDelay = oldDeliveryDelay });
+                new SqsBasicConfiguration() { DeliveryDelay = oldDeliveryDelay }).ConfigureAwait(false);
 
             // Act
             await queue.UpdateQueueAttributeAsync(
-                new SqsBasicConfiguration() { DeliveryDelay = newDeliveryDelay });
+                new SqsBasicConfiguration() { DeliveryDelay = newDeliveryDelay }).ConfigureAwait(false);
 
             // Assert
             queue.DeliveryDelay.ShouldBe(newDeliveryDelay);
