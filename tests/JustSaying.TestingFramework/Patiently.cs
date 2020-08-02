@@ -35,9 +35,9 @@ namespace JustSaying.TestingFramework
                 await Task.Delay(50.Milliseconds()).ConfigureAwait(false);
                 
                 ThreadPool.GetAvailableThreads(out var worker, out var io);
-                Console.WriteLinte($"Threadpool - worker: {worker}, io: {io}");
+                Console.WriteLine($"Threadpool - worker: {worker}, io: {io}");
                 ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
-                Console.WriteLinte($"ThreadpoolMin - worker: {minWorker}, io: {minIOC}");
+                Console.WriteLine($"ThreadpoolMin - worker: {minWorker}, io: {minIOC}");
                 
                 
                 Console.WriteLine($"Thread count: {Process.GetCurrentProcess().Threads.Count}");
