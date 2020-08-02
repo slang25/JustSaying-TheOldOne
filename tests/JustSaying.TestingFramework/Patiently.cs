@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Shouldly;
 
@@ -31,6 +32,8 @@ namespace JustSaying.TestingFramework
                 }
 
                 await Task.Delay(50.Milliseconds()).ConfigureAwait(false);
+                
+                Console.WriteLine($"Thread count: {Process.GetCurrentProcess().Threads.Count}");
 
                 // TODO Use ITestOutputHelper
                 Console.WriteLine(
@@ -55,6 +58,8 @@ namespace JustSaying.TestingFramework
                 }
 
                 await Task.Delay(50.Milliseconds()).ConfigureAwait(false);
+                
+                Console.WriteLine($"Thread count: {Process.GetCurrentProcess().Threads.Count}");
 
                 // TODO Use ITestOutputHelper
                 Console.WriteLine(
