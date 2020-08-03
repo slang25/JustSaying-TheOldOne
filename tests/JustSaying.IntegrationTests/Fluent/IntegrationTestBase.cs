@@ -11,10 +11,12 @@ using JustSaying.TestingFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace JustSaying.IntegrationTests.Fluent
 {
+    [Collection("Integration")]
     public abstract class IntegrationTestBase
     {
         protected IntegrationTestBase(ITestOutputHelper outputHelper)
