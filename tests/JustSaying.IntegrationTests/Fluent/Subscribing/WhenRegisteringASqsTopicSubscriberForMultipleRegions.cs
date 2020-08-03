@@ -46,7 +46,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
 
                     // Act
                     await publisher.PublishAsync(new MySqsTopicMessageForMultipleRegions(), cancellationToken);
-                    completionSource.Task.Wait(cancellationToken);
+                    await completionSource.Task.WithCancellation(cancellationToken);
 
                     // Assert
                     var busBuilder = serviceProvider.GetRequiredService<MessagingBusBuilder>();

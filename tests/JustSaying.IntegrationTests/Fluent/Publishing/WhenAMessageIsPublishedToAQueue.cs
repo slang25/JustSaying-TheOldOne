@@ -43,7 +43,7 @@ namespace JustSaying.IntegrationTests.Fluent.Publishing
                     await publisher.PublishAsync(message, cancellationToken);
 
                     // Assert
-                    completionSource.Task.Wait(cancellationToken);
+                    await completionSource.Task.WithCancellation(cancellationToken);
 
                     await handler.Received().Handle(Arg.Is<SimpleMessage>((m) => m.Content == content));
                 });

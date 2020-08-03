@@ -58,7 +58,7 @@ namespace JustSaying.UnitTests.Messaging.Channels.SubscriptionGroupTests
                 });
 
             var queue = new SqsQueueByName(RegionEndpoint.EUWest1, "some-queue-name", _client, retryCount, LoggerFactory);
-            queue.ExistsAsync().Wait();
+            Task.Run(() => queue.ExistsAsync()).GetAwaiter().GetResult();
 
             _queue = queue;
 

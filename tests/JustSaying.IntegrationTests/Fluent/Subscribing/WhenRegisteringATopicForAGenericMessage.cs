@@ -34,7 +34,7 @@ namespace JustSaying.IntegrationTests.Fluent.Subscribing
                     await publisher.PublishAsync(new GenericMessage<MyMessage>(), cancellationToken);
 
                     // Assert
-                    completionSource.Task.Wait(cancellationToken);
+                    await completionSource.Task.WithCancellation(cancellationToken);
                 });
         }
     }

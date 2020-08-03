@@ -64,7 +64,7 @@ namespace JustSaying
 
             // Act
             await publisher.PublishAsync(message, source.Token);
-            completionSource.Task.Wait(source.Token);
+            await completionSource.Task.WithCancellation(source.Token);
 
             // Assert
             await handler.Received().Handle(Arg.Any<SimpleMessage>());

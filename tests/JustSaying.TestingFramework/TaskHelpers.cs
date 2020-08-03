@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace JustSaying.TestingFramework
@@ -28,6 +29,28 @@ namespace JustSaying.TestingFramework
                 await Task.Delay(DelaySendMillis).ConfigureAwait(false);
                 doneSignal.SetResult(null);
             });
+        }
+
+        public static async Task<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
+        {
+            var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            // This disposes the registration as soon as one of the tasks trigger
+            using (cancellationToken.Register(state =>
+                {
+                    ((TaskCompletionSource<object>)state).TrySetResult(null);
+                },
+                tcs))
+            {
+                var resultTask = await Task.WhenAny(task, tcs.Task).ConfigureAwait(false);
+                if (resultTask == tcs.Task)
+                {
+                    // Operation cancelled
+                    throw new OperationCanceledException(cancellationToken);
+                }
+
+                return await task.ConfigureAwait(false);
+            }
         }
     }
 }
