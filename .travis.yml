@@ -9,6 +9,7 @@ env:
   global:
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
     - NUGET_XMLDOC_MODE=skip
+    - COMPlus_ThreadPool_ForceMinWorkerThreads=100
 
 git:
   depth: false
