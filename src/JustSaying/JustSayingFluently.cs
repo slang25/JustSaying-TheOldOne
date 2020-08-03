@@ -98,7 +98,7 @@ namespace JustSaying
 
                 CreatePublisher(eventPublisher, snsWriteConfig);
 
-                eventPublisher.EnsurePolicyIsUpdatedAsync(Bus.Config.AdditionalSubscriberAccounts).GetAwaiter().GetResult();
+                Task.Run(() => eventPublisher.EnsurePolicyIsUpdatedAsync(Bus.Config.AdditionalSubscriberAccounts)).GetAwaiter().GetResult();
 
                 Bus.AddMessagePublisher<T>(eventPublisher, region);
             }
@@ -113,11 +113,11 @@ namespace JustSaying
         {
             if (snsWriteConfig.Encryption != null)
             {
-                eventPublisher.CreateWithEncryptionAsync(snsWriteConfig.Encryption).GetAwaiter().GetResult();
+                Task.Run(() => eventPublisher.CreateWithEncryptionAsync(snsWriteConfig.Encryption)).GetAwaiter().GetResult();
             }
             else
             {
-                eventPublisher.CreateAsync().GetAwaiter().GetResult();
+                Task.Run(() => eventPublisher.CreateAsync()).GetAwaiter().GetResult();
             }
         }
 
@@ -152,9 +152,9 @@ namespace JustSaying
                     MessageResponseLogger = Bus.Config.MessageResponseLogger
                 };
 
-                if (!eventPublisher.ExistsAsync().GetAwaiter().GetResult())
+                if (!Task.Run(() => eventPublisher.ExistsAsync()).GetAwaiter().GetResult())
                 {
-                    eventPublisher.CreateAsync(config).GetAwaiter().GetResult();
+                    Task.Run(() => eventPublisher.CreateAsync(config)).GetAwaiter().GetResult();
                 }
 
                 Bus.AddMessagePublisher<T>(eventPublisher, region);
@@ -282,10 +282,10 @@ namespace JustSaying
             foreach (string region in Bus.Config.Regions)
             {
                 // TODO Make this async and remove GetAwaiter().GetResult() call
-                var queue = _amazonQueueCreator.EnsureTopicExistsWithQueueSubscribedAsync(
+                var queue = Task.Run(() => _amazonQueueCreator.EnsureTopicExistsWithQueueSubscribedAsync(
                     region, Bus.SerializationRegister,
                     _subscriptionConfig,
-                    Bus.Config.MessageSubjectProvider).GetAwaiter().GetResult();
+                    Bus.Config.MessageSubjectProvider)).GetAwaiter().GetResult();
 
                 CreateSubscriptionListener<T>(region, _subscriptionConfig.SubscriptionGroupName, queue);
 
@@ -305,7 +305,7 @@ namespace JustSaying
             foreach (var region in Bus.Config.Regions)
             {
                 // TODO Make this async and remove GetAwaiter().GetResult() call
-                var queue = _amazonQueueCreator.EnsureQueueExistsAsync(region, _subscriptionConfig).GetAwaiter().GetResult();
+                var queue = Task.Run(() => _amazonQueueCreator.EnsureQueueExistsAsync(region, _subscriptionConfig)).GetAwaiter().GetResult();
 
                 CreateSubscriptionListener<T>(region, _subscriptionConfig.SubscriptionGroupName, queue);
 
