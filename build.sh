@@ -11,8 +11,6 @@ export PATH="$DOTNET_INSTALL_DIR:$PATH"
 dotnet_version=$(dotnet --version)
 
 if [ "$dotnet_version" != "$CLI_VERSION" ]; then
-    # Install 2.2 until https://github.com/adamralph/minver/pull/287 is released
-    curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version "2.2.402" --install-dir "$DOTNET_INSTALL_DIR"
     curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version "$CLI_VERSION" --install-dir "$DOTNET_INSTALL_DIR"
 fi
 
@@ -25,6 +23,6 @@ fi
 
 dotnet build ./JustSaying.sln --output $artifacts --configuration $configuration || exit 1
 
-dotnet test ./tests/JustSaying.UnitTests/JustSaying.UnitTests.csproj --output $artifacts --configuration $configuration '--logger:Console;noprogress=true' || exit 1
-dotnet test ./tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests.csproj --output $artifacts --configuration $configuration '--logger:Console;noprogress=true' || exit 1
-dotnet test ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj --output $artifacts --configuration $configuration '--logger:Console;verbosity=detailed;noprogress=true' || exit 1
+dotnet test ./tests/JustSaying.UnitTests/JustSaying.UnitTests.csproj --output $artifacts --configuration $configuration '--logger:"console;noprogress=true"' || exit 1
+dotnet test ./tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests/JustSaying.Extensions.DependencyInjection.StructureMap.Tests.csproj --output $artifacts --configuration $configuration '--logger:"console;noprogress=true"' || exit 1
+dotnet test ./tests/JustSaying.IntegrationTests/JustSaying.IntegrationTests.csproj --output $artifacts --configuration $configuration '--logger:"console;verbosity=detailed;noprogress=true"' || exit 1
