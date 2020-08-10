@@ -126,7 +126,6 @@ namespace JustSaying.Fluent
 
             foreach (var region in config.Regions)
             {
-                // TODO Make this async and remove GetAwaiter().GetResult() call
                 var queue = await creator.EnsureQueueExistsAsync(region, subscriptionConfig).ConfigureAwait(false);
 
                 bus.AddQueue(region, subscriptionConfig.SubscriptionGroupName, queue);
